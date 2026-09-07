@@ -1,0 +1,5 @@
+pyserial>=3.5
+psutil>=5.9
+matplotlib>=3.7
+pythonnet>=3.0     # gercek sicaklik sensoru icin
+pytest>=8.0        # testler icin
