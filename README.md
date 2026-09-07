@@ -17,9 +17,31 @@ Python 3 + Tkinter + pyserial + psutil + matplotlib.
 
 ## Kurulum
 
+**1. Python bağımlılıkları:**
+
 ```bash
 pip install -r requirements.txt
 ```
+
+Bu kadarıyla uygulama çalışır. Sıcaklık, gerçek sensör bulunamadığında CPU yüküne
+bağlı bir model değeri olarak üretilir ve her kayıtta `temp_src = "model"` şeklinde
+işaretlenir, yani verinin ölçüm olup olmadığı her zaman bellidir.
+
+**2. Gerçek CPU sıcaklığı isteniyorsa (isteğe bağlı, yalnızca Windows):**
+
+```bash
+python fetch_lhm.py
+```
+
+Bu betik LibreHardwareMonitor kütüphanesini ve bağımlılıklarını nuget.org'dan
+indirip `lib/` klasörüne yerleştirir. Üçüncü parti ikili dosyalar olduğu için
+depoya dahil edilmemişlerdir. Ayrıca [PawnIO](https://pawnio.eu) sürücüsünün
+kurulu olması ve gönderici uygulamanın **yönetici olarak** çalıştırılması gerekir;
+bu üçü sağlandığında sıcaklık işlemcinin kendi kaydından (Tctl/Tdie) okunur ve
+`temp_src = "lhm"` olur.
+
+`lib/` klasörü yoksa ya da `pythonnet` kurulu değilse uygulama hata vermez, sadece
+model değerine düşer.
 
 ## Sanal seri port çifti
 
