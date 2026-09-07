@@ -9,11 +9,11 @@ Python 3 + Tkinter + pyserial + psutil + matplotlib.
 
 | Dosya | Görevi | Satır |
 |---|---|---|
-| `common.py` | Ortak katman: port listesi, ölçüm toplama, sıcaklık, paket biçimi, istatistik | 223 |
+| `common.py` | Ortak katman: port listesi, ölçüm toplama, sıcaklık, paket biçimi, istatistik | 247 |
 | `sender_gui.py` | Gönderici arayüz | 194 |
-| `receiver_gui.py` | Alıcı arayüz: kayıt + canlı grafik + eşik istatistiği | 304 |
+| `receiver_gui.py` | Alıcı arayüz: kayıt + canlı grafik + eşik istatistiği | 320 |
 | `test_common.py` | 38 test (pytest) | 219 |
-| `fetch_lhm.py` | Sıcaklık kütüphanesini nuget.org'dan `lib/` içine indiren yardımcı betik | — |
+| `fetch_lhm.py` | Sıcaklık kütüphanesini nuget.org'dan `lib/` içine indiren yardımcı betik | - |
 
 ## Kurulum
 
@@ -81,7 +81,7 @@ sıcaklık model değerine düşer ve arayüz bunu bir uyarıyla bildirir.
 ```
 
 Seri port paket değil bayt taşır; satır sonu karakteri paket sınırını belirler.
-Alıcı gelen baytları bir tamponda biriktirir, `split_lines()` tam satırları
+Alıcı gelen baytları bir buffer'da biriktirir, `split_lines()` tam satırları
 ayırır, yarım kalan kısım bir sonraki okumayı bekler.
 
 **Thread yok.** İki uygulama da Tkinter'ın `after()` zamanlayıcısını kullanır:
@@ -92,7 +92,7 @@ tek bir akışta okunur.
 **Sıcaklık.** Önce LibreHardwareMonitor kütüphanesiyle gerçek sensör denenir
 (işlemcinin Tctl/Tdie kaydı). Bunun için [PawnIO](https://pawnio.eu) sürücüsü
 kurulu olmalı ve program yönetici olarak çalışmalıdır. Okunamazsa CPU yüküne
-bağlı bir model değeri üretilir ve `temp_src` alanı `"model"` olur — böylece
+bağlı bir model değeri üretilir ve `temp_src` alanı `"model"` olur; böylece
 verinin ölçüm olup olmadığı her satırda bellidir.
 
 **Kayıt.** Alınan her örnek anında CSV'ye yazılır ve diske işlenir (`flush`), ki
@@ -108,9 +108,9 @@ ve ortalama ± standart sapma bandı; yan panelde aynı değerlerin tablosu.
 Eşik değiştirilip **Uygula**'ya basılınca veri yeniden toplanmaz, sadece hesap
 tekrarlanır.
 
-Eşik girişi doğrulanır: yalnızca 0–100 arasındaki sayılar kabul edilir. Negatif
+Eşik girişi doğrulanır: yalnızca 0-100 arasındaki sayılar kabul edilir. Negatif
 sayı, 100'den büyük değer ya da sayı olmayan bir metin (`abc`, boş, `12,5`)
-girilirse uyarı gösterilir ve kutu son geçerli değere döner — geçersiz giriş
+girilirse uyarı gösterilir ve kutu son geçerli değere döner, geçersiz giriş
 sessizce sıfır sayılmaz.
 
 ## Testler
